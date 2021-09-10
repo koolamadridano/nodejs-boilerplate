@@ -6,7 +6,8 @@ const mongoose = require("mongoose");
 
 const port = process.env.PORT || 5000;
 const connectiongString = process.env.CONNECTION_STRING;
-
+// const connectiongString =
+//   "mongodb+srv://demoUser:eu0mKG91RPCIwrFM@democluster.yqvyg.mongodb.net/test";
 const app = express();
 // routes
 const _profile = require("./routes/profile");

@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
+const { sendEmail } = require("../services/nodemailer/mail");
 
 module.exports = {
   // [POST]
@@ -23,7 +24,8 @@ module.exports = {
           encryptedPassword: hashValue,
         })
           .save()
-          .then(() => {
+          .then(async () => {
+            await sendEmail(email, "#AUTOMATED_NODEJS_MAIL #KOLYA");
             return res.status(200).json({
               email: email,
               password: password,
