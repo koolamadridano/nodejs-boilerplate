@@ -1,4 +1,7 @@
+require("dotenv").config();
+
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 
@@ -44,9 +47,13 @@ module.exports = {
           password,
           user.encryptedPassword,
           function (err, isMatched) {
-            //    console.log(err);
             if (isMatched) {
-              return res.status(200).json(user);
+              const accessToken = jwt.sign(
+                { data: user._id.toString() },
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: "2h" }
+              );
+              return res.status(200).json({ user, accessToken });
             }
             return res
               .status(400)
@@ -56,6 +63,15 @@ module.exports = {
       }
     } catch (error) {
       console.log(error);
+    }
+  },
+  async logoutUser(req, res) {
+    try {
+      req.session.destroy(() => {
+        return res.status(200).json({ message: "Logout successful!" });
+      });
+    } catch (error) {
+      return res.status(400).json({ message: "Something went wrong" });
     }
   },
 };
