@@ -8,6 +8,7 @@ const userController = require("../controllers/userController");
 router.post("/user", (request, response) =>
   userController.createUser(request, response)
 );
+
 // [POST] api/user/login
 // @Description: Create profile
 router.post("/user/login", (request, response) =>
