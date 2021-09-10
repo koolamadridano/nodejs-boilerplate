@@ -1,18 +1,16 @@
 {
-    "workbench.colorTheme": "Andromeda",
-    "editor.wordWrapColumn": 200,
-    "editor.defaultFormatter": "Dart-Code.dart-code",
-    "dart.lineLength": 120,
-    "workbench.editorAssociations": {
-        "*.ipynb": "jupyter.notebook.ipynb"
-    },
-    "editor.fontSize": 16,
-    "files.autoSave": "afterDelay",
-    "window.zoomLevel": -1,
-    "beautify.config": "",
-    "files.exclude": {
-        "node_modules/": true,
-        "package-lock.json": true,
-        ".gitattributes": true,
-    }
+  "workbench.colorTheme": "Andromeda",
+  "editor.wordWrapColumn": 300,
+  "editor.fontSize": 15,
+  "files.autoSave": "afterDelay",
+  "window.zoomLevel": -1,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.exclude": {
+    "node_modules/": true,
+    "package-lock.json": true,
+    ".gitattributes": true
+  }
 }

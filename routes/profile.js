@@ -1,25 +1,42 @@
 const express = require("express");
 const router = express.Router();
 
-const Profile = require("../models/profile");
+const profileController = require("../controllers/profileController");
 
-router.post("/profile", (req, res) => {
-    try {
-       // const { firstName, lastName, address, avatarUrl } = req.body;
-        const newProfile = new Profile({
-            firstName: req.body.firstName,
-            lastName:  req.body.lastName,
-            address: req.body.address,
-            avatarUrl: req.body.avatarUrl,
-            dateJoined: Date.now()
-        });
-        newProfile
-            .save()
-            .then((value) => res.json(value))
-            .catch((error) => res.json(error));
-    } catch (error) {
-        console.error(error);
-    }
-});
+// [POST] api/profile
+// @Description: Create profile
+router.post("/profile", (request, response) =>
+  profileController.createProfile(request, response)
+);
+
+// [GET] api/profile
+// @Description: Get all profiles
+router.get("/profile", (request, response) =>
+  profileController.getAllProfiles(request, response)
+);
+
+// [GET] api/profile/<objectId>
+// @Description: Get one profile
+router.get("/profile/:id", (request, response) =>
+  profileController.getProfile(request, response)
+);
+
+// [GET] api/profile/filter/<type>
+// @Description: Get all profiles by type
+router.get("/profile/filter/:userType", (request, response) =>
+  profileController.getProfileByType(request, response)
+);
+
+// [PUT] api/profile/<objectId>
+// @Description: Update profile by objectId
+router.put("/profile/:id", (request, response) =>
+  profileController.updateProfile(request, response)
+);
+
+// [DELETE] api/profile/<objectId>
+// @Description: Delete profile by objectId
+router.delete("/profile/:id", (request, response) =>
+  profileController.deleteProfile(request, response)
+);
 
 module.exports = router;
