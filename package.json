@@ -4,9 +4,8 @@
   "description": "<h1>NodeJS</h1>  A complete backend boilerplate using node express & GraphQL",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-
   },
   "repository": {
     "type": "git",
@@ -19,6 +18,7 @@
   },
   "homepage": "https://github.com/koolamadridano/nodejs-boilerplate#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "express": "^4.17.1",
     "mongoose": "^6.0.5"
   }

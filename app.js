@@ -8,7 +8,7 @@ const connectiongString =
 
 // routes
 const _profile = require("./routes/profile");
-
+const _user = require("./routes/user");
 try {
   mongoose.connect(connectiongString).then(() => {
     console.log("MONGODB CONNECTED");
@@ -21,6 +21,8 @@ try {
     })
   );
   app.use("/api", _profile);
+  app.use("/api", _user);
+
   app.listen(port, () => {
     console.log("SERVER RUNNING");
   });
