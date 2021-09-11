@@ -24,13 +24,13 @@ module.exports = {
         })
           .save()
           .then(async () => {
-            sendEmail(
-              email,
-              "development.mail.ph@gmail.com",
-              "#AUTOMATED_NODEJS_MAIL #ByKOLYA",
-              "Account created",
-              "<b>Thank you for creating your account"
-            );
+            // sendEmail(
+            //   email,
+            //   "development.mail.ph@gmail.com",
+            //   "#AUTOMATED_NODEJS_MAIL #ByKOLYA",
+            //   "Account created",
+            //   "<b>Thank you for creating your account"
+            // );
             return res.status(200).json({
               email: email,
               password: password,
@@ -67,6 +67,10 @@ module.exports = {
               .send({ message: "Email and/or Password is invalid" });
           }
         );
+      } else if (!user) {
+        return res
+          .status(400)
+          .send({ message: "Email and/or Password is invalid" });
       }
     } catch (error) {
       console.log(error);
