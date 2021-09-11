@@ -1,5 +1,4 @@
 require("dotenv").config();
-
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -25,7 +24,13 @@ module.exports = {
         })
           .save()
           .then(async () => {
-            await sendEmail(email, "#AUTOMATED_NODEJS_MAIL #KOLYA");
+            sendEmail(
+              email,
+              "development.mail.ph@gmail.com",
+              "#AUTOMATED_NODEJS_MAIL #ByKOLYA",
+              "Account created",
+              "<b>Thank you for creating your account"
+            );
             return res.status(200).json({
               email: email,
               password: password,
