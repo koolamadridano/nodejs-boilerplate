@@ -1,36 +1,58 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
 
 const ProfileSchema = new Schema({
+  accountId: {
+    type: String,
+    required: [true, "accountId is required"],
+  },
+  userType: {
+    type: String,
+    enum: ["customer", "event-planner"],
+    required: [true, "userType is required"],
+  },
   firstName: {
     type: String,
-    required: [true, "Firstname is required"],
+    required: [true, "firstName is required"],
   },
   lastName: {
     type: String,
-    required: [true, "Lastname is required"],
+    required: [true, "lastName is required"],
+  },
+  bio: {
+    type: String,
+    //required: [true, "bio is required"],
   },
   address: {
-    type: String,
-    required: [true, "Address is required"],
+    name: {
+      type: String,
+      //required: [true, "name is required"],
+    },
+    coordinates: {
+      latitude: {
+        type: String,
+        //required: [true, "latitude is required"],
+      },
+      longitude: {
+        type: String,
+        // required: [true, "longitude is required"],
+      },
+    },
   },
-  avatarUrl: {
-    type: String,
-    required: [true, "Avatar is required"],
+  contact: {
+    email: {
+      type: String,
+      // required: [true, "email is required"],
+    },
+    number: {
+      type: String,
+      //required: [true, "contactNo is required"],
+    },
   },
   dateJoined: {
     type: Date,
     default: Date.now,
   },
-  email: {
-    type: String,
-    required: [true, "Email is required"],
-  },
-  userType: {
-    type: String,
-    required: [true, "UserType is required"],
-  },
 });
 
-module.exports = Profile = mongoose.model("profile", ProfileSchema);
+module.exports = Profile = mongoose.model("profiles", ProfileSchema);

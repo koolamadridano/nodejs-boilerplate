@@ -14,16 +14,15 @@ module.exports = {
       if (isExisted) {
         return res.status(400).send({ message: "Email is currently used" });
       }
-      // [CREATE]
-      // @Description: Create if <email> did not exist
+
       await bcrypt.hash(password, 12).then(async (hashValue) => {
-        await User({
-          email: email,
-          password: password,
-          encryptedPassword: hashValue,
+        User({
+          email,
+          password,
+          hashValue,
         })
           .save()
-          .then(async () => {
+          .then((value) => {
             // sendEmail(
             //   email,
             //   "development.mail.ph@gmail.com",
@@ -32,14 +31,12 @@ module.exports = {
             //   "<b>Thank you for creating your account"
             // );
             return res.status(200).json({
-              email: email,
-              password: password,
-              hash: hashValue,
+              accountId: value._id,
+              email,
+              password: hashValue,
             });
           })
-          .catch(() => {
-            return res.status(400).send({ message: "Cannot create user" });
-          });
+          .catch((err) => res.status(400).send(err));
       });
     } catch (error) {
       console.log(error);
@@ -49,40 +46,27 @@ module.exports = {
     try {
       const { email, password } = req.body;
       let user = await User.findOne({ email });
-      if (user) {
-        await bcrypt.compare(
-          password,
-          user.encryptedPassword,
-          function (err, isMatched) {
-            if (isMatched) {
-              const accessToken = jwt.sign(
-                { data: user._id.toString() },
-                process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: "2h" }
-              );
-              return res.status(200).json({ user, accessToken });
-            }
-            return res
-              .status(400)
-              .send({ message: "Email and/or Password is invalid" });
-          }
-        );
-      } else if (!user) {
-        return res
-          .status(400)
-          .send({ message: "Email and/or Password is invalid" });
+      if (!user) {
+        return res.status(400).json({ message: "Account doesn't exist" });
       }
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  async logoutUser(req, res) {
-    try {
-      req.session.destroy(() => {
-        return res.status(200).json({ message: "Logout successful!" });
+      await bcrypt.compare(password, user.hashValue).then((value) => {
+        if (value == false) {
+          return res.status(400).json({ message: "Invalid login" });
+        }
+        const accessToken = jwt.sign(
+          { data: user._id.toString() },
+          process.env.ACCESS_TOKEN_SECRET,
+          { expiresIn: "2h" }
+        );
+        return res.status(200).json({
+          accountId: user._id,
+          email: user.email,
+          dateJoined: user.dateJoined,
+          token: accessToken,
+        });
       });
     } catch (error) {
-      return res.status(400).json({ message: "Something went wrong" });
+      console.log(error);
     }
   },
 };

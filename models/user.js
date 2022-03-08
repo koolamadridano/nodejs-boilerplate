@@ -11,18 +11,8 @@ const UserSchema = new Schema({
     type: String,
     required: [true, "Password is required"],
   },
-  encryptedPassword: {
+  hashValue: {
     type: String,
-    required: false,
-  },
-  role: {
-    type: String,
-    required: false,
-  },
-  dateCreated: {
-    type: Date,
-    default: Date.now,
-    required: false,
   },
 });
 

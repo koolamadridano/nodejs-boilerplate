@@ -12,32 +12,32 @@ router.post("/profile", (req, res) =>
 
 // [GET] api/profile
 // @Description: Get all profiles
-router.get("/profile", protected.auth, (req, res) =>
+router.get("/profile", (req, res) =>
   profileController.getAllProfiles(req, res)
 );
 
 // [GET] api/profile/<objectId>
 // @Description: Get one profile
-router.get("/profile/:id", protected.auth, (req, res) =>
+router.get("/profile/:id", (req, res) =>
   profileController.getProfile(req, res)
-);
-
-// [GET] api/profile/filter/<type>
-// @Description: Get all profiles by type
-router.get("/profile/filter/:userType", protected.auth, (req, res) =>
-  profileController.getProfileByType(req, res)
 );
 
 // [PUT] api/profile/<objectId>
 // @Description: Update profile by objectId
-router.put("/profile/:id", protected.auth, (req, res) =>
-  profileController.updateProfile(request, response)
+router.put("/profile/:id", (req, res) =>
+  profileController.updateProfile(req, res)
 );
 
 // [DELETE] api/profile/<objectId>
 // @Description: Delete profile by objectId
-router.delete("/profile/:id", protected.auth, (req, res) =>
-  profileController.deleteProfile(request, response)
+router.delete("/profile/:id", (req, res) =>
+  profileController.deleteProfile(req, res)
+);
+
+// [DELETE] api/profile/<objectId>
+// @Description: Delete profile by objectId
+router.delete("/doc/profile/delete-all", (req, res) =>
+  profileController.deleteAll(req, res)
 );
 
 module.exports = router;
