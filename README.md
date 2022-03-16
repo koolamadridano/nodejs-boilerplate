@@ -1,5 +1,4 @@
 <h1>Nodejs Express Boilerplate</h1>
-<p>Backend boilerplate using</p>
 
 <h4>Packages</h4>
 <ul>
@@ -15,6 +14,9 @@
   <li> Cloudinary</li>
 </ul>
 
-<p>Created By</p>
-<p>Madridano, Kolya Nikolai M.</p>
+<pre>
+  Created By
+  Madridano, Kolya Nikolai M.
+  madridano.kolya@gmail.com
+</pre>
 
