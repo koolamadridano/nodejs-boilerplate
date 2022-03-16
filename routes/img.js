@@ -6,17 +6,13 @@ const imgUploadController = require("../controllers/imgUploadController");
 
 // [POST] api/img
 // @Description: Create/Upload Img file
-
-//PROTECTED
-// router.post("/route", protected.auth, (req, res) => {});
-
-router.post("/img", (req, res) => {
+router.post("/img", protected.auth, (req, res) => {
   imgUploadController.uploadImg(req, res);
 });
 
 // [DELETE] api/img
 // @Description: Delete img at cloudinary and db
-router.delete("/img", (req, res) => {
+router.delete("/img",  protected.auth, (req, res) => {
   imgUploadController.deleteImg(req, res);
 });
 
