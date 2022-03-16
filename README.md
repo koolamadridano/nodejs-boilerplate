@@ -1,5 +1,4 @@
 <h1>Nodejs Express Boilerplate</h1>
-<p>Backend boilerplate using</p>
 
 <h4>Packages</h4>
 <ul>
