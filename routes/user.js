@@ -3,21 +3,17 @@ const router = express.Router();
 
 const userController = require("../controllers/userController");
 
-// [POST] api/user
-// @Description: Create profile
-router.post("/user", (request, response) =>
-  userController.createUser(request, response)
+// [POST] api/register
+// @Description: Register
+router.post("/register", (req, res) =>
+  userController.register(req, res)
 );
 
-// [POST] api/user/login
-// @Description: Create profile
-router.post("/user/login", (request, response) =>
-  userController.loginUser(request, response)
+// [POST] api/login
+// @Description: Login 
+router.post("/login", (req, res) =>
+  userController.login(req, res)
 );
 
-// [POST] api/user/logout
-// @Description: Logout user by removing session
-router.post("/user/logout", (request, response) =>
-  userController.logoutUser(request, response)
-);
+
 module.exports = router;

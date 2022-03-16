@@ -1,11 +1,12 @@
 const Profile = require("../models/profile");
 
 module.exports = {
+
   // [POST]
   async createProfile(req, res) {
     try {
-      const { accountId, userType, firstName, lastName } = req.body;
-      return new Profile({ accountId, userType, firstName, lastName })
+      console.log(req.authorization);
+      return Profile(req.body)
         .save()
         .then((value) => res.status(200).json(value))
         .catch((err) => res.status(400).send(err.errors));
@@ -17,27 +18,9 @@ module.exports = {
   // [GET]
   async getAllProfiles(req, res) {
     try {
-      const reqType = req.body.type;
-      if (reqType == "customer") {
-        return Profile.find()
-          .where("userType")
-          .equals("customer")
-          .sort({ dateJoined: -1 }) // filter by date
-          .select({ _id: 0, __v: 0 }) // Do not return _id and __v
-          .then((value) => res.status(200).json(value))
-          .catch((err) => res.status(400).json(err));
-      }
-      if (reqType == "event-planner") {
-        return Profile.find()
-          .where("userType")
-          .equals("event-planner")
-          .sort({ dateJoined: -1 })
-          .select({ _id: 0, __v: 0 })
-          .then((value) => res.status(200).json(value))
-          .catch((err) => res.status(400).json(err));
-      }
-      return Profile.find()
-        .sort({ dateJoined: -1 })
+      const role = req.query.role;
+      return Profile.find({ role })
+        .sort({ _id: -1 })
         .select({ _id: 0, __v: 0 })
         .then((value) => res.status(200).json(value))
         .catch((err) => res.status(400).json(err));
@@ -45,15 +28,16 @@ module.exports = {
       console.error(error);
     }
   },
+
+
   async getProfile(req, res) {
     try {
-      const accountId = req.params.id;
-      Profile.findOne({ accountId })
+      const userId = req.query.userId;
+      Profile.findOne({ userId })
         .select({ _id: 0, __v: 0 })
         .then((value) => {
-          if (!value) {
-            return res.status(400).json({ message: "accountId not found" });
-          }
+          if (!value) 
+            return res.status(400).json({ message: "userId not found" });
           return res.status(200).json(value);
         })
         .catch((err) => res.status(400).json(err));
@@ -65,21 +49,61 @@ module.exports = {
   // [UPDATE]
   async updateProfile(req, res) {
     try {
-      const accountId = req.params.id;
-      Profile.findOneAndUpdate(
-        { accountId },
-        {
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-        }
-      )
+      const type = req.query.type;
+      const userId = req.query.userId;
+
+      if(type == "personal") {
+          const { firstName, lastName, bio } = req.body;
+          Profile.findOneAndUpdate(
+            { userId },
+            { firstName, lastName, bio },
+          )
+          .then((value) => {
+            if (!value) 
+              return res.status(400).json({ message: "userId not found" });
+            return res.status(200).json({ message: "updated"});
+          })
+          .catch((err) => res.status(400).json(err));
+      }
+
+      if(type == "contact") {
+          const { number, email } = req.body;
+          Profile.findOneAndUpdate(
+            { userId },
+            {
+              $set: {
+                "contact.number": number,
+                "contact.email": email,
+              },
+            },
+          )
+          .then((value) => {
+            if (!value) 
+              return res.status(400).json({ message: "userId not found" });
+            return res.status(200).json({ message: "updated"});
+          })
+          .catch((err) => res.status(400).json(err));
+      }
+
+      if(type == "address") {
+        const { title, coordinates } = req.body;
+        Profile.findOneAndUpdate(
+          { userId },
+          {
+            $set: {
+              "address.title": title,
+              "address.coordinates": coordinates,
+            },
+          },
+        )
         .then((value) => {
-          if (!value) {
-            return res.status(400).json({ message: "accountId not found" });
-          }
-          res.status(200).json(value);
+          if (!value) 
+            return res.status(400).json({ message: "userId not found" });
+          return res.status(200).json({ message: "updated"});
         })
         .catch((err) => res.status(400).json(err));
+    }
+
     } catch (error) {
       console.error(error);
     }
@@ -88,23 +112,13 @@ module.exports = {
   // [DELETE]
   async deleteProfile(req, res) {
     try {
-      const accountId = req.params.id;
-      Profile.findOneAndRemove({ accountId })
+      const userId = req.query.userId;
+      Profile.findOneAndRemove({ userId })
         .then((value) => {
-          if (!value) {
-            return res.status(400).json({ message: "accountId not found" });
-          }
-          return res.status(200).json(value);
+          if (!value) 
+            return res.status(400).json({ message: "userId not found" });
+          return res.status(200).json({ message: "removed"});
         })
-        .catch((err) => res.status(400).json(err));
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  async deleteAll(req, res) {
-    try {
-      return Profile.deleteMany({})
-        .then((value) => res.status(200).json(value))
         .catch((err) => res.status(400).json(err));
     } catch (error) {
       console.log(error);

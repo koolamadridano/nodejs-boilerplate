@@ -1,10 +1,11 @@
 {
   "name": "nodejs-boilerplate",
   "version": "1.0.0",
-  "description": "<h1>NodeJS</h1>  A complete backend boilerplate using node express & GraphQL",
+  "description": "Nodejs Express Boilerplate",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,7 +21,6 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.26.3",
-    "connect-mongodb-session": "^3.1.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",

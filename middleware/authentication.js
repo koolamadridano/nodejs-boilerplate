@@ -11,12 +11,13 @@ module.exports = {
           if (err)
             return res
               .status(401)
-              .json({ message: "Token is invalid or expired" });
-          req.user = value;
+              .json({ message: "Authentication Token is invalid or expired" });
+              
+          req.authorization = value;
           next();
         });
       } else if (authHeader == null) {
-        return res.status(401).json({ message: "Token is required" });
+        return res.status(401).json({ message: "Authentication Token is required" });
       }
     } catch (error) {
       console.log(error);

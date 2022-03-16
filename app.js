@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const multer = require("multer");
 const mongoose = require("mongoose");
@@ -22,10 +24,6 @@ try {
   app.use("/api", require("./routes/profile"));
   app.use("/api", require("./routes/user"));
   app.use("/api", require("./routes/img"));
-  app.use("/api", require("./routes/profileBasicInfo"));
-  app.use("/api", require("./routes/event"));
-  app.use("/api", require("./routes/event-planner-bookings"));
-  app.use("/api", require("./routes/customer-bookings"));
 
   app.listen(port, () => console.log("SERVER IS NOW RUNNING"));
 } catch (error) {

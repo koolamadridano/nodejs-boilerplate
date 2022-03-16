@@ -6,38 +6,33 @@ const protected = require("../middleware/authentication");
 
 // [POST] api/profile
 // @Description: Create profile
-router.post("/profile", (req, res) =>
+router.post("/profile", protected.auth, (req, res) =>
   profileController.createProfile(req, res)
 );
 
 // [GET] api/profile
 // @Description: Get all profiles
-router.get("/profile", (req, res) =>
+router.get("/profile",  protected.auth, (req, res) =>
   profileController.getAllProfiles(req, res)
 );
 
-// [GET] api/profile/<objectId>
+// [GET] api/profile/single?userId=6231b77afcb5981d18a17a58
 // @Description: Get one profile
-router.get("/profile/:id", (req, res) =>
+router.get("/profile/single",  protected.auth, (req, res) =>
   profileController.getProfile(req, res)
 );
 
-// [PUT] api/profile/<objectId>
+// [PUT] api/profile?userId=6231b77afcb5981d18a17a58
 // @Description: Update profile by objectId
-router.put("/profile/:id", (req, res) =>
+router.put("/profile",  protected.auth, (req, res) =>
   profileController.updateProfile(req, res)
 );
 
-// [DELETE] api/profile/<objectId>
+// [DELETE]  api/profile?userId=6231b77afcb5981d18a17a58
 // @Description: Delete profile by objectId
-router.delete("/profile/:id", (req, res) =>
+router.delete("/profile",  protected.auth, (req, res) =>
   profileController.deleteProfile(req, res)
 );
 
-// [DELETE] api/profile/<objectId>
-// @Description: Delete profile by objectId
-router.delete("/doc/profile/delete-all", (req, res) =>
-  profileController.deleteAll(req, res)
-);
 
 module.exports = router;

@@ -1,18 +1,26 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const roles = [ "user", "admin"];
+
 const UserSchema = new Schema({
+  role: {
+    type: String,
+    default: "user",
+    enum: roles,
+  },
   email: {
     type: String,
     unique: true,
     required: [true, "Username is required"],
   },
-  password: {
-    type: String,
-    required: [true, "Password is required"],
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
-  hashValue: {
+  passwordHash: {
     type: String,
+    required: [true, "passwordHash is required"],
   },
 });
 

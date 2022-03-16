@@ -4,7 +4,7 @@ module.exports = {
   async uploadImg(req, res) {
     try {
       const options = {
-        folder: "projects/event-booking",
+        folder: "projects/nodejs-boilerplate",
         unique_filename: true,
       };
       const filePath = req.file.path;
